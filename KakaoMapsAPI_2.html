@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>민원 다발발생지역</title>
+    
+</head>
+<body>
+<div id="map" style="width: 1000px;; height: 1000px;;"></div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=key"></script>
+
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+    mapOption = { 
+        center: new kakao.maps.LatLng(35.81660036, 127.1566663), // 지도의 중심좌표
+        level: 4 // 지도의 확대 레벨
+    };
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+var mapTypeControl = new kakao.maps.MapTypeControl();	// 지도 타입 컨트롤을 지도에 표시합니다
+
+map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT); // 지도 종류 표시 위성사진/지도
+map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);   //교통정보 표시
+
+// 마커를 표시할 위치와 title 객체 배열입니다 
+var positions = [
+    {
+        title: '한옥마을3', 
+        latlng: new kakao.maps.LatLng(35.81660036, 127.1566663)
+    },
+    {
+        title: '한옥마을대성주차장', 
+        latlng: new kakao.maps.LatLng(35.80062313,127.1686811
+        )
+    },
+    {
+        title: '평화2동주차장', 
+        latlng: new kakao.maps.LatLng(35.79596451,127.1361042
+        )
+    },
+    {
+        title: '서부신시가지 도청사거리', 
+        latlng: new kakao.maps.LatLng(35.81968124,127.1049814
+        )
+    },
+    {
+        title: '남노송동', 
+        latlng: new kakao.maps.LatLng(35.8204445,127.1535986
+        )
+    },
+    {
+        title: '정읍.고창방면 만남의광장', 
+        latlng: new kakao.maps.LatLng( 35.80164184,127.0926097
+        )
+    },
+    {
+        title: '서부신시가지 서곡방면', 
+        latlng: new kakao.maps.LatLng( 35.828448,127.097802
+        )
+    },
+    {
+        title: '서부신시가지 도청옆', 
+        latlng: new kakao.maps.LatLng( 35.81761757,127.1101946
+        
+        )
+    },
+    {
+        title: '서부신시가지농협중앙회', 
+        latlng: new kakao.maps.LatLng(35.81762512,127.1078265
+        )
+    },
+    {
+        title: '서부신시가지 롯데마트뒤', 
+        latlng: new kakao.maps.LatLng(35.81698805,127.1049332
+        )
+    },
+    {
+        title: '전주비보이광장', 
+        latlng: new kakao.maps.LatLng(35.81643505,127.1103468
+        )
+    },
+    {
+        title: '홍산라이브광장', 
+        latlng: new kakao.maps.LatLng(35.81641226,127.107681)
+    },
+    {
+        title: '서부신시가지 시티병원', 
+        latlng: new kakao.maps.LatLng(35.81643505,127.1103468
+        )
+    },
+    {
+        title: '서부신시가지 KB은행', 
+        latlng: new kakao.maps.LatLng(35.8151391 ,127.1078241)
+    },
+    {
+        title: '서서학동 주민자치센터', 
+        latlng: new kakao.maps.LatLng(35.805569,127.149134
+        )
+    },
+    {
+        title: '오거리', 
+        latlng: new kakao.maps.LatLng(35.821232,127.1451912
+        )
+    },
+    {
+        title: '태평동', 
+        latlng: new kakao.maps.LatLng(35.82245737,127.137278
+        )
+    },
+    {
+        title: '서부신시가지 여명교회뒤 ', 
+        latlng: new kakao.maps.LatLng( 35.82063188,127.0961614
+        )
+    },
+    {
+        title: '고사동 전주영화제작소', 
+        latlng: new kakao.maps.LatLng( 35.818312,127.1427168 )
+    },
+    {
+        title: '한옥마을2', 
+        latlng: new kakao.maps.LatLng(35.8183037
+        ,127.152849)
+    },
+    {
+        title: '완산수영장', 
+        latlng: new kakao.maps.LatLng(35.802606 ,127.106197)
+    },
+    {
+        title: '중화산2동', 
+        latlng: new kakao.maps.LatLng( 35.81757823
+        ,127.115212
+        )
+    },
+    {
+        title: '서부신시가지 KBS옆', 
+        latlng: new kakao.maps.LatLng( 35.82175841
+        ,127.1029617
+        )
+    },
+    {
+        title: '서신동 서신지구대', 
+        latlng: new kakao.maps.LatLng( 35.83541434
+        ,127.1114138 )
+    },
+    {
+        title: '삼천2동', 
+        latlng: new kakao.maps.LatLng(35.796655
+        ,127.1217302 )
+    },
+    {
+        title: '이중본 뒤', 
+        latlng: new kakao.maps.LatLng(35.812818
+        ,127.122035)
+    },
+    {
+        title: '색장동 만남의광장', 
+        latlng: new kakao.maps.LatLng(35.788415
+        ,127.1934289 )
+    },
+    {
+        title: '서부신시가지 전주대원룸옆', 
+        latlng: new kakao.maps.LatLng(35.812987
+        ,127.0949926)
+    },
+    {
+        title: '서부신시가지 엘드@', 
+        latlng: new kakao.maps.LatLng(35.813169
+        ,127.109605 )
+    },
+    {
+        title: '화산체육관', 
+        latlng: new kakao.maps.LatLng(35.82094133
+        ,127.1245751)
+    },
+    {
+        title: '근영여고 앞', 
+        latlng: new kakao.maps.LatLng(35.817146
+        ,127.123426 )
+    },
+    {
+        title: '서부신시가지 예다움원룸', 
+        latlng: new kakao.maps.LatLng(35.82167786
+        ,127.1013438)
+    },
+    {
+        title: '서부신시가지 신한은행', 
+        latlng: new kakao.maps.LatLng(35.81759828
+        ,127.1032854 )
+    },
+    {
+        title: '서부신시가지 보훈청', 
+        latlng: new kakao.maps.LatLng(35.815245
+        ,127.1040361)
+    },
+    {
+        title: '서부신시가지 마전', 
+        latlng: new kakao.maps.LatLng(35.827719
+        ,127.105126)
+    },
+    {
+        title: '서부신시가지 전북경찰청옆', 
+        latlng: new kakao.maps.LatLng(35.82381032
+        ,127.102945)
+    } ,
+    {
+        title: '서부신시가지 KT&G옆', 
+        latlng: new kakao.maps.LatLng(35.821745
+        ,127.102946)
+    },
+    {
+        title: '서신동', 
+        latlng: new kakao.maps.LatLng(35.83159158
+        ,127.1144504 )
+    },
+    {
+        title: '서부신시가지 전주대신정문', 
+        latlng: new kakao.maps.LatLng(35.81722291
+        ,127.096657)
+    },
+    {
+        title: '노송천', 
+        latlng: new kakao.maps.LatLng(35.82690168
+        ,127.1423128)
+    },
+    {
+        title: '한옥마을노상', 
+        latlng: new kakao.maps.LatLng(35.8204445
+        ,127.1535986)
+    },
+    {
+        title: '한옥마을1', 
+        latlng: new kakao.maps.LatLng(35.81825046
+        ,127.1536774)
+    },
+    {
+        title: '남노송동 병무청', 
+        latlng: new kakao.maps.LatLng(35.8204445
+        ,127.1535986)
+    },
+    {
+        title: '서신동 에덴교회', 
+        latlng: new kakao.maps.LatLng(35.83452064
+        ,127.109046)
+    },
+    {
+        title: '신일강변APT옆', 
+        latlng: new kakao.maps.LatLng(35.79998774
+        ,127.1115246)
+    },
+    {
+        title: '인후1동안골', 
+        latlng: new kakao.maps.LatLng(35.8355004
+        ,127.154604)
+    },
+    {
+        title: '건산천2', 
+        latlng: new kakao.maps.LatLng(35.83294201
+        ,127.1347648)
+    },
+    {
+        title: '인후3동 진버들', 
+        latlng: new kakao.maps.LatLng(35.8363209
+        ,127.164735)
+    },
+    {
+        title: '아중지구 밀레니엄 옆', 
+        latlng: new kakao.maps.LatLng(35.83152828
+        ,127.172963)
+    },
+    {
+        title: '아중지구 롯데APT옆', 
+        latlng: new kakao.maps.LatLng(35.831586
+        ,127.1706162)
+    },
+    {
+        title: '아중지구 부영APT옆', 
+        latlng: new kakao.maps.LatLng(35.825419
+        ,127.171632 )
+    },
+    {
+        title: '우아1동 공영주차장 ', 
+        latlng: new kakao.maps.LatLng(35.8493129
+        ,127.1573228)
+    },
+    {
+        title: '호성동 만남의광장', 
+        latlng: new kakao.maps.LatLng(35.867441
+        ,127.147521)
+    },
+    {
+        title: '송천2동 시영아파트 옆', 
+        latlng: new kakao.maps.LatLng(35.868255
+        ,127.113119)
+    },
+    {
+        title: '하가지구 나그네교회 앞', 
+        latlng: new kakao.maps.LatLng(35.85339036
+        ,127.131618        )
+    },
+    {
+        title: '인후공원', 
+        latlng: new kakao.maps.LatLng(35.84341911
+        ,127.163767 )
+    },
+    {
+        title: '건산천1', 
+        latlng: new kakao.maps.LatLng(35.83202671
+        ,127.1370205)
+    },
+    {
+        title: '송천2동 용소초교', 
+        latlng: new kakao.maps.LatLng(35.86135501
+        ,127.1180147)
+    },
+    {
+        title: '송천1동 송천도서관', 
+        latlng: new kakao.maps.LatLng(35.869365
+        ,127.102945)
+    },
+    {
+        title: '동물원', 
+        latlng: new kakao.maps.LatLng(35.85730635
+        ,127.1440769 )
+    },
+    {
+        title: '우아2동 아중택지개발지구', 
+        latlng: new kakao.maps.LatLng(35.837556,127.168407
+        )
+    },
+    {
+        title: '군산방면 만남의광장', 
+        latlng: new kakao.maps.LatLng(35.8750205,127.056677)
+    },
+    {
+        title: '인후2동건지', 
+        latlng: new kakao.maps.LatLng(35.8466072
+        ,127.148226)
+    },
+    {
+        title: '아중지구 아중도서관 ', 
+        latlng: new kakao.maps.LatLng(35.82632995 ,127.1626078
+)
+    },
+    {
+        title: '인후2동금평', 
+        latlng: new kakao.maps.LatLng(35.8430137,127.1453213)
+    },
+    {
+        title: '송천2동공원', 
+        latlng: new kakao.maps.LatLng(35.864516
+        ,127.118132        )
+    },
+    {
+        title: '덕진광장', 
+        latlng: new kakao.maps.LatLng(35.844154
+        ,127.1240375 )
+    },
+    {
+        title: '가련산 ', 
+        latlng: new kakao.maps.LatLng(35.845469 ,127.120302)
+    },
+    {
+        title: '종합경기장', 
+        latlng: new kakao.maps.LatLng(35.84075454
+        ,127.127127        )
+    },
+    {
+        title: '월드컵경기장', 
+        latlng: new kakao.maps.LatLng(35.8680573
+        ,127.0645192)
+    },
+    {
+        title: '무진장방면 만남의광장', 
+        latlng: new kakao.maps.LatLng(35.84213528
+        ,127.1758765
+        )
+    },
+    {
+        title: '덕진공원', 
+        latlng: new kakao.maps.LatLng(35.84749476
+        ,127.1210312 )
+    },
+    {
+        title: '실내체육관', 
+        latlng: new kakao.maps.LatLng(35.84420741
+        ,127.1292618 )
+    },
+    {
+        title: '하가지구 하가홈마트 뒤', 
+        latlng: new kakao.maps.LatLng(35.84330766 ,127.1097145)
+    },
+    {
+        title: '하가지구 소소빌딩뒤', 
+        latlng: new kakao.maps.LatLng(35.846689
+        ,127.109772)
+    },
+    {
+        title: '하가지구 풍경안경원 옆', 
+        latlng: new kakao.maps.LatLng(35.8422224
+        ,127.110542)
+    },
+    {
+        title: '하가지구 리드빌딩', 
+        latlng: new kakao.maps.LatLng(35.841311
+        ,127.111283
+        )
+    }
+];
+
+// 마커 이미지의 이미지 주소입니다
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+    
+for (var i = 0; i < positions.length; i ++) {
+    
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(17, 25); 
+    
+    // 마커 이미지를 생성합니다    
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+    
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image : markerImage // 마커 이미지 
+    });
+}
+
+
+var circle1 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.873973, 127.071353),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+var circle2 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.837132, 127.06029),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+var circle3 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.844595, 127.122247),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+var circle4 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.823791, 127.146969),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+var circle5 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.814726, 127.109027),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+var circle6 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.836964, 127.133019),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+var circle7 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.795129, 127.134064),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+var circle8 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.874143, 127.127371),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+var circle9 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.864989, 127.134785),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+var circle10 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.832927, 127.138577),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+var circle11 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.809428, 127.153308),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+var circle12 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.844832, 127.109111),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+var circle13 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.866735, 127.127271),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+var circle14 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.831501, 127.168229),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+var circle15 = new kakao.maps.Circle({
+    center : new kakao.maps.LatLng(35.832584, 127.169059),  // 원의 중심좌표 입니다 
+    radius: 100, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 2, // 선의 두께입니다 
+    strokeColor: '#3399FF', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일 입니다
+    fillColor: '#99FFFF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+}); 
+
+circle1.setMap(map);
+circle2.setMap(map);  
+circle3.setMap(map);  
+circle4.setMap(map);
+circle5.setMap(map);  
+circle6.setMap(map);  
+circle7.setMap(map);
+circle8.setMap(map);  
+circle9.setMap(map);  
+circle10.setMap(map);
+circle11.setMap(map);
+circle12.setMap(map);
+circle13.setMap(map);
+circle14.setMap(map);
+circle15.setMap(map); 
+
+</script>
+</body>
+</html>
